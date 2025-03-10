@@ -14,6 +14,7 @@ export default function Dashboard() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentDate, setCurrentDate] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const today = new Date();
@@ -30,14 +31,18 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setLoading(true);
         const snapshot = await getDocs(collection(db, "users"));
         const userList = snapshot.docs
           .map((doc) => {
             const userData = doc.data();
             return {
               id: doc.id,
-              profile: userData.profile_picture || "https://via.placeholder.com/50",
-              fullName: `${userData.first_name || "N/A"} ${userData.last_name || "N/A"}`,
+              profile:
+                userData.profile_picture || "https://via.placeholder.com/50",
+              fullName: `${userData.first_name || "N/A"} ${
+                userData.last_name || "N/A"
+              }`,
               city: userData.City || "N/A",
               userType: userData.user_type || "N/A",
             };
@@ -59,6 +64,8 @@ export default function Dashboard() {
         setUserCounts(counts);
       } catch (error) {
         console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -71,9 +78,24 @@ export default function Dashboard() {
     totalUsers > 0 ? ((count / totalUsers) * 100).toFixed(2) : 0;
 
   const data = [
-    { name: "Landowner", value: userCounts.Landowner, percentage: getPercentage(userCounts.Landowner), color: "#28a745" },
-    { name: "Surveyor", value: userCounts.Surveyor, percentage: getPercentage(userCounts.Surveyor), color: "#6f42c1" },
-    { name: "Processor", value: userCounts.Processor, percentage: getPercentage(userCounts.Processor), color: "#dc3545" },
+    {
+      name: "Landowner",
+      value: userCounts.Landowner,
+      percentage: getPercentage(userCounts.Landowner),
+      color: "#28a745",
+    },
+    {
+      name: "Surveyor",
+      value: userCounts.Surveyor,
+      percentage: getPercentage(userCounts.Surveyor),
+      color: "#6f42c1",
+    },
+    {
+      name: "Processor",
+      value: userCounts.Processor,
+      percentage: getPercentage(userCounts.Processor),
+      color: "#dc3545",
+    },
   ];
 
   const handleSearch = (e) => {
@@ -105,49 +127,70 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="overflow-y-auto max-h-[400px]">
-            <table className="w-full min-w-[500px] border-collapse bg-gray-50 rounded-lg shadow-md">
-              <thead>
-                <tr className="bg-gray-200 text-gray-700 text-left">
-                  <th className="p-3">Profile</th>
-                  <th className="p-3">Full Name</th>
-                  <th className="p-3">City</th>
-                  <th className="p-3">User Type</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUsers.length > 0 ? (
-                  filteredUsers.slice(0, 10).map((user) => (
-                    <tr key={user.id} className="border-b hover:bg-gray-100 transition-all">
-                      <td className="p-3">
-                        <img
-                          src={user.profile}
-                          alt="User Profile"
-                          className="w-10 h-10 rounded-full border"
-                        />
-                      </td>
-                      <td className="p-3">{user.fullName}</td>
-                      <td className="p-3">{user.city}</td>
-                      <td className="p-3 font-semibold text-blue-600">{user.userType}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4" className="text-center p-3 text-gray-500">
-                      No users found.
-                    </td>
+          {loading ? (
+            <div className="text-center p-6 text-gray-500">
+              Loading users...
+            </div>
+          ) : (
+            <div className="overflow-y-auto max-h-[400px]">
+              <table className="w-full min-w-[500px] border-collapse bg-gray-50 rounded-lg shadow-md">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700 text-left">
+                    <th className="p-3">Profile</th>
+                    <th className="p-3">Full Name</th>
+                    <th className="p-3">City</th>
+                    <th className="p-3">User Type</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {filteredUsers.length > 0 ? (
+                    filteredUsers.slice(0, 10).map((user) => (
+                      <tr
+                        key={user.id}
+                        className="border-b hover:bg-gray-100 transition-all"
+                      >
+                        <td className="p-3">
+                          <img
+                            src={user.profile}
+                            alt="User Profile"
+                            className="w-10 h-10 rounded-full border"
+                          />
+                        </td>
+                        <td className="p-3">{user.fullName}</td>
+                        <td className="p-3">{user.city}</td>
+                        <td className="p-3 font-semibold text-blue-600">
+                          {user.userType}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4" className="text-center p-3 text-gray-500">
+                        No users found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
-          <h3 className="text-2xl font-bold text-gray-700 text-center mb-4">User Distribution</h3>
+          <h3 className="text-2xl font-bold text-gray-700 text-center mb-4">
+            User Distribution
+          </h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie data={data} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={100} paddingAngle={3}>
+              <Pie
+                data={data}
+                dataKey="value"
+                cx="50%"
+                cy="50%"
+                innerRadius={70}
+                outerRadius={100}
+                paddingAngle={3}
+              >
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
@@ -157,12 +200,20 @@ export default function Dashboard() {
 
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {data.map((item) => (
-              <div key={item.name} className="flex justify-between items-center text-sm bg-gray-100 p-3 rounded-lg shadow">
+              <div
+                key={item.name}
+                className="flex justify-between items-center text-sm bg-gray-100 p-3 rounded-lg shadow"
+              >
                 <div className="flex items-center">
-                  <span className="w-3 h-3 rounded-full mr-3" style={{ backgroundColor: item.color }}></span>
+                  <span
+                    className="w-3 h-3 rounded-full mr-3"
+                    style={{ backgroundColor: item.color }}
+                  ></span>
                   <span className="text-gray-700 font-medium">{item.name}</span>
                 </div>
-                <span className="text-gray-600 font-bold">{item.percentage}%</span>
+                <span className="text-gray-600 font-bold">
+                  {item.percentage}%
+                </span>
               </div>
             ))}
           </div>

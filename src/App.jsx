@@ -7,7 +7,9 @@ import Login from "./components/Login.jsx";
 import logo from "./assets/images/Logo.png";
 
 export default function App() {
-  const [active, setActive] = useState(localStorage.getItem("activePage") || "Dashboard");
+  const [active, setActive] = useState(
+    localStorage.getItem("activePage") || "Dashboard"
+  );
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
   );
@@ -30,7 +32,10 @@ export default function App() {
 
   // Update page title and favicon
   useEffect(() => {
-    document.title = active === "Dashboard" ? "TerraMaster Hub" : `TerraMaster Hub - ${active}`;
+    document.title =
+      active === "Dashboard"
+        ? "TerraMaster Hub"
+        : `TerraMaster Hub - ${active}`;
     const favicon = document.querySelector("link[rel='icon']");
     if (favicon) {
       favicon.href = logo;
@@ -69,12 +74,13 @@ export default function App() {
             handleLogout={handleLogout}
           />
 
-          {isSidebarOpen && !window.matchMedia("(min-width: 768px)").matches && (
-            <div
-              onClick={() => setIsSidebarOpen(false)}
-              className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
-            ></div>
-          )}
+          {isSidebarOpen &&
+            !window.matchMedia("(min-width: 768px)").matches && (
+              <div
+                onClick={() => setIsSidebarOpen(false)}
+                className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
+              ></div>
+            )}
 
           <div
             className={`flex-1 overflow-auto transition-all duration-300 ${

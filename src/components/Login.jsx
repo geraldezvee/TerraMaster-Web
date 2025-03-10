@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Lock, Key, Eye, EyeOff } from "lucide-react"; // Importing new icons
+import { Lock, Key, Eye, EyeOff } from "lucide-react";
 import logo from "../assets/images/Logo.png";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
@@ -10,7 +10,6 @@ export default function Login({ setIsAuthenticated }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  // Load saved email from localStorage on component mount
   useEffect(() => {
     const savedEmail = localStorage.getItem("savedEmail");
     if (savedEmail) {
@@ -20,13 +19,11 @@ export default function Login({ setIsAuthenticated }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset previous error
+    setError("");
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setIsAuthenticated(true);
-
-      // Save the email to localStorage for future autofill
       localStorage.setItem("savedEmail", email);
     } catch (err) {
       const errorCode = err.code;
@@ -59,13 +56,15 @@ export default function Login({ setIsAuthenticated }) {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#F5EFE6] p-4">
-      <div className="bg-white p-8 md:p-12 rounded-lg shadow-md w-full max-w-3xl flex flex-col md:flex-row items-center min-h-[480px]">
+      <div className="bg-white p-8 md:p-12 rounded-lg shadow-md w-full max-w-xl flex flex-col md:flex-row items-center min-h-[480px]">
         <div className="hidden md:block flex-shrink-0 mr-8">
           <img src={logo} alt="TerraMaster Hub" className="w-32 md:w-48" />
         </div>
 
         <div className="w-full">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800">Welcome Back</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800">
+            Welcome Back
+          </h2>
           <p className="text-sm md:text-md text-center text-gray-600 mb-4 md:mb-6">
             Login to access TerraMaster Hub
           </p>
@@ -85,7 +84,9 @@ export default function Login({ setIsAuthenticated }) {
             </div>
 
             <div className="mb-4 relative">
-              <label className="block text-gray-700 font-medium">Password</label>
+              <label className="block text-gray-700 font-medium">
+                Password
+              </label>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
@@ -112,7 +113,7 @@ export default function Login({ setIsAuthenticated }) {
               type="submit"
               className="w-full flex items-center justify-center gap-2 bg-yellow-900 text-white py-3 rounded-md font-medium hover:bg-yellow-800 transition"
             >
-              <Key size={18} /> {/* Replacing the LogIn icon with Key */}
+              <Key size={18} />
               Login
             </button>
           </form>
