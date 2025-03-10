@@ -6,8 +6,8 @@ export default function UserApproval() {
   const [pendingUsers, setPendingUsers] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [loading, setLoading] = useState(true);
-  const [selectedUser, setSelectedUser] = useState(null); // To store selected user
-  const [isModalOpen, setIsModalOpen] = useState(false); // To control modal visibility
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchPendingUsers = async () => {
@@ -90,20 +90,14 @@ export default function UserApproval() {
               >
                 <td className="p-3">
                   <img
-                    src={
-                      user.profile_picture || "https://via.placeholder.com/50"
-                    }
+                    src={user.profile_picture || "https://via.placeholder.com/50"}
                     alt="User Profile"
                     className="w-10 h-10 rounded-full border"
                   />
                 </td>
-                <td className="p-3">
-                  {user.first_name} {user.last_name}
-                </td>
+                <td className="p-3">{user.first_name} {user.last_name}</td>
                 <td className="p-3">{user.email}</td>
-                <td className="p-3 font-semibold text-blue-600">
-                  {user.user_type}
-                </td>
+                <td className="p-3 font-semibold text-blue-600">{user.user_type}</td>
                 <td className="p-3">{user.status}</td>
                 <td className="p-3 flex justify-center gap-2">
                   <button className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-700 transition-all">
@@ -126,7 +120,13 @@ export default function UserApproval() {
       {isModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center z-50 backdrop-blur-sm">
           {/* Modal Content */}
-          <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg relative">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+            >
+              <span className="text-2xl">&times;</span> {/* Close button */}
+            </button>
             <h2 className="text-2xl font-bold mb-4">User Details</h2>
             {selectedUser && (
               <div>
@@ -140,10 +140,7 @@ export default function UserApproval() {
                         <strong>Front ID:</strong>
                       </p>
                       <img
-                        src={
-                          selectedUser.frontIDUrl ||
-                          "https://via.placeholder.com/150"
-                        }
+                        src={selectedUser.frontIDUrl || "https://via.placeholder.com/150"}
                         alt="Front ID"
                         className="w-full rounded-md"
                       />
@@ -154,10 +151,7 @@ export default function UserApproval() {
                         <strong>Back ID:</strong>
                       </p>
                       <img
-                        src={
-                          selectedUser.backIDUrl ||
-                          "https://via.placeholder.com/150"
-                        }
+                        src={selectedUser.backIDUrl || "https://via.placeholder.com/150"}
                         alt="Back ID"
                         className="w-full rounded-md"
                       />
@@ -167,8 +161,7 @@ export default function UserApproval() {
 
                 <div className="mt-4">
                   <p>
-                    <strong>Name:</strong> {selectedUser.first_name}{" "}
-                    {selectedUser.last_name}
+                    <strong>Name:</strong> {selectedUser.first_name} {selectedUser.last_name}
                   </p>
                   <p>
                     <strong>Email:</strong> {selectedUser.email}
