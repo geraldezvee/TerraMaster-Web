@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Lock, Key, Eye, EyeOff } from "lucide-react";
 import logo from "../assets/images/Logo.png";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export default function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
@@ -22,9 +23,25 @@ export default function Login({ setIsAuthenticated }) {
     setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setIsAuthenticated(true);
-      localStorage.setItem("savedEmail", email);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", user.email));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0].data();
+        
+        if (userDoc.user_type === "Admin") {
+          setIsAuthenticated(true);
+          localStorage.setItem("savedEmail", email);
+        } else {
+          setError("You do not have the necessary permissions to log in.");
+        }
+      } else {
+        setError("User not found.");
+      }
     } catch (err) {
       const errorCode = err.code;
       let errorMessage = "An unexpected error occurred. Please try again.";
@@ -101,12 +118,6 @@ export default function Login({ setIsAuthenticated }) {
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
-            </div>
-
-            <div className="text-right mb-4">
-              <a href="#" className="text-sm text-yellow-900 hover:underline">
-                Forgot password?
-              </a>
             </div>
 
             <button
