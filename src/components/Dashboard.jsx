@@ -128,23 +128,23 @@ export default function Dashboard() {
           </div>
 
           {loading ? (
-            <div className="text-center p-6 text-gray-500">
-              Loading users...
+            <div className="flex justify-center items-center py-10">
+              <div className="w-12 h-12 border-4 border-gray-300 border-t-yellow-800 rounded-full animate-spin"></div>
             </div>
           ) : (
-            <div className="overflow-y-auto max-h-[400px]">
-              <table className="w-full min-w-[500px] border-collapse bg-gray-50 rounded-lg shadow-md">
+            <div className="overflow-x-auto w-full">
+              <table className="w-full border-collapse bg-gray-50 rounded-lg shadow-md text-sm sm:text-base">
                 <thead>
-                  <tr className="bg-gray-200 text-gray-700 text-left">
-                    <th className="p-3">Profile</th>
-                    <th className="p-3">Full Name</th>
-                    <th className="p-3">City</th>
-                    <th className="p-3">User Type</th>
+                  <tr className="bg-gray-200 text-gray-700">
+                    <th className="p-3 text-left">Profile</th>
+                    <th className="p-3 text-left">Full Name</th>
+                    <th className="p-3 text-center">City</th>
+                    <th className="p-3 text-center">User Type</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredUsers.length > 0 ? (
-                    filteredUsers.slice(0, 10).map((user) => (
+                    filteredUsers.slice(0, 6).map((user) => (
                       <tr
                         key={user.id}
                         className="border-b hover:bg-gray-100 transition-all"
@@ -153,12 +153,12 @@ export default function Dashboard() {
                           <img
                             src={user.profile}
                             alt="User Profile"
-                            className="w-10 h-10 rounded-full border"
+                            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border"
                           />
                         </td>
                         <td className="p-3">{user.fullName}</td>
-                        <td className="p-3">{user.city}</td>
-                        <td className="p-3 font-semibold text-blue-600">
+                        <td className="p-3 text-center">{user.city}</td>
+                        <td className="p-3 text-center font-semibold text-blue-600">
                           {user.userType}
                         </td>
                       </tr>
@@ -176,28 +176,38 @@ export default function Dashboard() {
           )}
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center">
-          <h3 className="text-2xl font-bold text-gray-700 text-center mb-4">
-            User Distribution
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <h3 className="text-2xl font-bold text-gray-700 mb-4">
+            Users Distribution
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={data}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                innerRadius={70}
-                outerRadius={100}
-                paddingAngle={3}
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
 
+          {loading ? (
+            // Loading Animation
+            <div className="flex justify-center items-center h-[300px]">
+              <div className="w-12 h-12 border-4 border-gray-300 border-t-yellow-800 rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={data}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={100}
+                  paddingAngle={2}
+                  label={({ percentage }) => `${percentage}%`}
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          )}
+
+          {/* Legend */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {data.map((item) => (
               <div

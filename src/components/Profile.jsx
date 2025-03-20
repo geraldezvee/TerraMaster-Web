@@ -39,8 +39,10 @@ export default function Profile() {
     return (
       <div className="w-full max-w-7xl pt-10 m-auto">
         <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
-        <div className="bg-white shadow-lg rounded-lg p-8">
-          <div className="text-gray-600">Loading...</div>
+        <div className="bg-white shadow-lg rounded-lg p-8 flex flex-col items-center">
+          {/* Spinner Loader */}
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-yellow-800 rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-600">Loading profile...</p>
         </div>
       </div>
     );
@@ -49,7 +51,7 @@ export default function Profile() {
   return (
     <div className="w-full max-w-7xl pt-10 m-auto">
       <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
-      <div className="bg-white shadow-lg rounded-lg p-8">
+      <div className="bg-white p-4 rounded-lg shadow-md overflow-x-auto">
         {userData ? (
           <>
             <div className="flex items-center space-x-6">
