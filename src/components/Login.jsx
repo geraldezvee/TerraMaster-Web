@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Ensure navigation works
 import { Lock, Key, Eye, EyeOff, Loader2 } from "lucide-react";
 import logo from "../assets/images/Logo.png";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -12,6 +13,7 @@ export default function Login({ setIsAuthenticated }) {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate(); // ✅ Added for redirection
 
   useEffect(() => {
     const savedCredentials = JSON.parse(localStorage.getItem("savedCredentials"));
@@ -27,6 +29,12 @@ export default function Login({ setIsAuthenticated }) {
       } else {
         localStorage.removeItem("savedCredentials");
       }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("isAuthenticated") === "true") {
+      navigate("/dashboard"); // ✅ Redirect to dashboard if already logged in
     }
   }, []);
 
@@ -47,13 +55,11 @@ export default function Login({ setIsAuthenticated }) {
         const userDoc = querySnapshot.docs[0].data();
         if (userDoc.user_type === "Admin") {
           setIsAuthenticated(true);
+          localStorage.setItem("isAuthenticated", "true");
+          navigate("/dashboard"); // ✅ Ensures landing page is Dashboard
 
           if (rememberMe) {
-            const credentials = {
-              email,
-              password,
-              timestamp: Date.now(),
-            };
+            const credentials = { email, password, timestamp: Date.now() };
             localStorage.setItem("savedCredentials", JSON.stringify(credentials));
           } else {
             localStorage.removeItem("savedCredentials");
@@ -81,9 +87,6 @@ export default function Login({ setIsAuthenticated }) {
           break;
         case "auth/network-request-failed":
           errorMessage = "Network error. Check your internet connection.";
-          break;
-        case "auth/email-already-in-use":
-          errorMessage = "This email is already in use. Try logging in.";
           break;
         default:
           errorMessage = "Login failed. Please check your details and try again.";

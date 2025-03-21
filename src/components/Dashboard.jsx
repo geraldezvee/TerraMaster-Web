@@ -110,7 +110,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="w-full max-w-7xl pt-10 m-auto">
+    <div className="bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-4xl font-bold text-gray-800">User Statistics</h2>
       <p className="text-md text-gray-600 mb-6">{currentDate}</p>
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import UserApproval from "./components/UserApproval.jsx";
@@ -7,90 +8,81 @@ import Login from "./components/Login.jsx";
 import logo from "./assets/images/Logo.png";
 
 export default function App() {
-  const [active, setActive] = useState(
-    localStorage.getItem("activePage") || "Dashboard"
-  );
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
   );
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(
+    () => JSON.parse(localStorage.getItem("isSidebarOpen")) ?? true
+  );
 
-  // Store authentication status in localStorage
   useEffect(() => {
     localStorage.setItem("isAuthenticated", isAuthenticated);
-    if (!isAuthenticated) {
-      setActive("Dashboard"); // Reset to Dashboard when logged out
-    }
   }, [isAuthenticated]);
 
-  // Store active page in localStorage to persist after refresh
   useEffect(() => {
-    if (isAuthenticated) {
-      localStorage.setItem("activePage", active);
-    }
-  }, [active, isAuthenticated]);
-
-  // Update page title and favicon
-  useEffect(() => {
-    document.title =
-      active === "Dashboard"
-        ? "TerraMaster Hub"
-        : `TerraMaster Hub - ${active}`;
-    const favicon = document.querySelector("link[rel='icon']");
-    if (favicon) {
-      favicon.href = logo;
-    }
-  }, [active]);
-
-  const renderContent = () => {
-    switch (active) {
-      case "User Approval":
-        return <UserApproval />;
-      case "Profile":
-        return <Profile />;
-      default:
-        return <Dashboard />;
-    }
-  };
+    localStorage.setItem("isSidebarOpen", JSON.stringify(isSidebarOpen));
+  }, [isSidebarOpen]);
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
+    setIsAuthenticated(false);
   };
 
   return (
-    <>
+    <Router>
+      <UpdateTitleAndFavicon />
       {!isAuthenticated ? (
-        <div className="flex justify-center items-center min-h-screen bg-[#F5EFE6]">
-          <Login setIsAuthenticated={setIsAuthenticated} />
-        </div>
+        <Routes>
+          <Route path="*" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+        </Routes>
       ) : (
         <div className="flex h-screen">
           <Sidebar
-            setActive={setActive}
-            active={active}
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
             handleLogout={handleLogout}
           />
-
-          {isSidebarOpen &&
-            !window.matchMedia("(min-width: 768px)").matches && (
-              <div
-                onClick={() => setIsSidebarOpen(false)}
-                className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
-              ></div>
-            )}
-
-          <div
-            className={`flex-1 overflow-auto transition-all duration-300 ${
-              isSidebarOpen ? "ml-80" : "ml-20"
-            } ${window.innerWidth < 768 && !isSidebarOpen ? "ml-0" : ""}`}
-          >
-            {renderContent()}
+          <div className={`flex-1 overflow-auto transition-all duration-300 ${isSidebarOpen ? "ml-80" : "ml-20"}`}>
+            <PageContent />
           </div>
         </div>
       )}
-    </>
+    </Router>
+  );
+}
+
+function UpdateTitleAndFavicon() {
+  const location = useLocation();
+
+  useEffect(() => {
+    let pageTitle = "TerraMaster Hub";
+    if (location.pathname !== "/") {
+      const formattedTitle = location.pathname.replace("/", "").replace("-", " ");
+      pageTitle = `TerraMaster Hub - ${formattedTitle.charAt(0).toUpperCase() + formattedTitle.slice(1)}`;
+    }
+    document.title = pageTitle;
+
+    let favicon = document.querySelector("link[rel='icon']");
+    if (!favicon) {
+      favicon = document.createElement("link");
+      favicon.rel = "icon";
+      document.head.appendChild(favicon);
+    }
+    favicon.href = logo;
+  }, [location.pathname]);
+
+  return null;
+}
+
+// ✅ Ensures Dashboard is the first page after login
+function PageContent() {
+  return (
+    <Routes>
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/user-approval" element={<UserApproval />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 }
