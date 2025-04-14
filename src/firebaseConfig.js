@@ -2,14 +2,16 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+console.log("API Key:", import.meta.env.VITE_FIREBASE_API_KEY);
+
 const firebaseConfig = {
-    apiKey: "AIzaSyCAYosq5yChZCb7wTxhjLksbIl3wTjBRhA",
-    authDomain: "terramaster-6f801.firebaseapp.com",
-    projectId: "terramaster-6f801",
-    storageBucket: "terramaster-6f801.appspot.com",
-    messagingSenderId: "735703701299",
-    appId: "1:735703701299:web:7d25bbc057d61309429046"
-  };
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

@@ -111,7 +111,7 @@ export default function Dashboard() {
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-6">
-      <h2 className="text-4xl font-bold text-gray-800">User Statistics</h2>
+      <h2 className="text-4xl font-bold text-gray-800">Dashboard</h2>
       <p className="text-md text-gray-600 mb-6">{currentDate}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">

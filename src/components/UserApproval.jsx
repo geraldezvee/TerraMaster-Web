@@ -55,18 +55,15 @@ export default function UserApproval() {
       const userRef = doc(db, "users", userId);
       await updateDoc(userRef, { status: "Active" });
 
-      // Update the UI: Remove the approved user from the list
       setPendingUsers((prevUsers) =>
         prevUsers.filter((user) => user.id !== userId)
       );
 
-      // Show toast notification 🆕
       setNotification({
         message: `✅ ${userName} has been approved!`,
         type: "success",
       });
 
-      // Auto-hide notification after 3 seconds
       setTimeout(() => setNotification(null), 3000);
     } catch (error) {
       console.error("Error updating user status: ", error);
@@ -90,7 +87,7 @@ export default function UserApproval() {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 relative">
+    <div className="min-h-screen bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-4xl font-bold text-gray-900">
         View Land Surveyor's / Processor's Details
       </h2>

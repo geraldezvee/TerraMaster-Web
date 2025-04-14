@@ -7,6 +7,8 @@ import {
   Settings,
   LayoutDashboard,
   Loader2,
+  Library,
+  UserRoundPen,
 } from "lucide-react";
 import logo from "../assets/images/Logo.png";
 import "../index.css";
@@ -47,7 +49,8 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout 
   const menuItems = [
     { name: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={18} /> },
     { name: "User Approval", path: "/user-approval", icon: <UserCheck size={18} /> },
-    { name: "Profile", path: "/profile", icon: <Settings size={18} /> },
+    { name: "Transaction Record", path: "/transaction-records", icon: <Library size={18} /> },
+    { name: "Profile", path: "/profile", icon: <UserRoundPen size={18} /> },
   ];
 
   // ✅ Updated Logout Function
