@@ -110,8 +110,8 @@ export default function Login({ setIsAuthenticated }) {
   };
 
   return (
-    <div className="font-mono flex items-center justify-center w-full min-h-screen bg-[#F5EFE6]">
-      <div className="bg-white p-6 md:p-12 rounded-lg shadow-lg w-full max-w-lg flex flex-col items-center">
+    <div className="font-mono flex items-center justify-center w-full min-h-screen bg-yellow-400">
+      <div className="bg-yellow-200 p-6 md:p-12 rounded-lg shadow-lg w-full max-w-lg flex flex-col items-center">
         {/* Logo */}
         <div className="flex justify-center md:mb-1">
           <img src={logo} alt="TerraMaster Hub" className="w-60 md:w-60" />
