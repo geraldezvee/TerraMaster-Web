@@ -36,8 +36,8 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="p-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Admin Profile</h2>
+      <div className="font-mono p-6">
+        <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
         <div className="bg-white shadow-lg rounded-lg p-6 flex items-center">
           <Loader2 className="w-8 h-8 text-yellow-900 animate-spin mr-3" />
           <p className="text-gray-600">Loading profile...</p>
@@ -47,9 +47,9 @@ export default function Profile() {
   }
 
   return (
-    <div className="p-6">
+    <div className="font-mono p-6">
       {/* Page Header */}
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">Admin Profile</h2>
+      <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
 
       {/* Profile Card */}
       <div className="bg-white shadow-lg rounded-lg p-6">
@@ -58,7 +58,9 @@ export default function Profile() {
             {/* Profile Header */}
             <div className="flex items-center space-x-4">
               <img
-                src={userData?.profile_picture || "https://via.placeholder.com/150"}
+                src={
+                  userData?.profile_picture || "https://via.placeholder.com/150"
+                }
                 alt="User Avatar"
                 className="w-20 h-20 rounded-full border-4 border-yellow-900 shadow-md"
               />
@@ -73,22 +75,34 @@ export default function Profile() {
 
             {/* Personal Information */}
             <div className="mt-6 border-t pt-6">
-              <h2 className="text-xl font-semibold text-gray-700 mb-4">Personal Information</h2>
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                Personal Information
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-gray-600 font-medium">Full Name</label>
-                  <p className="text-gray-800">{userData?.first_name} {userData?.last_name}</p>
+                  <label className="block text-gray-600 font-medium">
+                    Full Name
+                  </label>
+                  <p className="text-gray-800">
+                    {userData?.first_name} {userData?.last_name}
+                  </p>
                 </div>
                 <div>
-                  <label className="block text-gray-600 font-medium">Email</label>
+                  <label className="block text-gray-600 font-medium">
+                    Email
+                  </label>
                   <p className="text-gray-800">{userData?.email}</p>
                 </div>
                 <div>
-                  <label className="block text-gray-600 font-medium">Role</label>
+                  <label className="block text-gray-600 font-medium">
+                    Role
+                  </label>
                   <p className="text-gray-800">{userData?.user_type}</p>
                 </div>
                 <div>
-                  <label className="block text-gray-600 font-medium">Phone</label>
+                  <label className="block text-gray-600 font-medium">
+                    Phone
+                  </label>
                   <p className="text-gray-800">{userData?.phone || "N/A"}</p>
                 </div>
               </div>

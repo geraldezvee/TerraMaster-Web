@@ -4,7 +4,6 @@ import {
   Menu,
   LogOut,
   UserCheck,
-  Settings,
   LayoutDashboard,
   Loader2,
   Library,
@@ -13,7 +12,11 @@ import {
 import logo from "../assets/images/Logo.png";
 import "../index.css";
 
-export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout }) {
+export default function Sidebar({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  handleLogout,
+}) {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const sidebarRef = useRef(null);
@@ -37,7 +40,12 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout 
   // ✅ Handle Click Outside to Close Sidebar (Mobile Only)
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (isMobile && isSidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+      if (
+        isMobile &&
+        isSidebarOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
         setIsSidebarOpen(false);
       }
     };
@@ -47,9 +55,21 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout 
   }, [isMobile, isSidebarOpen]);
 
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <LayoutDashboard size={18} /> },
-    { name: "User Approval", path: "/user-approval", icon: <UserCheck size={18} /> },
-    { name: "Transaction Record", path: "/transaction-records", icon: <Library size={18} /> },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <LayoutDashboard size={18} />,
+    },
+    {
+      name: "User Approval",
+      path: "/user-approval",
+      icon: <UserCheck size={18} />,
+    },
+    {
+      name: "Transaction Record",
+      path: "/transaction-records",
+      icon: <Library size={18} />,
+    },
     { name: "Profile", path: "/profile", icon: <UserRoundPen size={18} /> },
   ];
 
@@ -77,7 +97,7 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout 
 
       <div
         ref={sidebarRef}
-        className={`h-screen flex flex-col transition-all duration-300 fixed left-0 top-0 bg-[#F5EFE6] p-4 shadow-lg z-50 font-inter ${
+        className={`h-screen flex flex-col transition-all duration-300 fixed left-0 top-0 bg-[#F5EFE6] p-4 shadow-lg z-50 font-mono ${
           isSidebarOpen ? "w-80" : "w-20"
         }`}
       >
@@ -94,7 +114,9 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout 
           <img
             src={logo}
             alt="Website Logo"
-            className={`object-contain transition-all duration-300 ${isSidebarOpen ? "w-40" : "w-10"}`}
+            className={`object-contain transition-all duration-300 ${
+              isSidebarOpen ? "w-40" : "w-10"
+            }`}
           />
         </div>
 
@@ -105,12 +127,16 @@ export default function Sidebar({ isSidebarOpen, setIsSidebarOpen, handleLogout 
               <Link
                 to={item.path}
                 className={`flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all ease-in-out duration-300 ${
-                  location.pathname === item.path ? "bg-yellow-900 text-white" : "text-gray-800"
+                  location.pathname === item.path
+                    ? "bg-yellow-900 text-white"
+                    : "text-gray-800"
                 } font-inter`}
                 onClick={() => isMobile && setIsSidebarOpen(false)}
               >
                 {item.icon}
-                {isSidebarOpen && <span className="font-medium">{item.name}</span>}
+                {isSidebarOpen && (
+                  <span className="font-medium">{item.name}</span>
+                )}
               </Link>
             </li>
           ))}

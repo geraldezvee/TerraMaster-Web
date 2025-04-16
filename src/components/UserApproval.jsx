@@ -87,7 +87,7 @@ export default function UserApproval() {
   };
 
   return (
-    <div className="min-h-screen bg-white shadow-lg rounded-lg p-6">
+    <div className="font-mono min-h-screen bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-4xl font-bold text-gray-900">
         View Land Surveyor's / Processor's Details
       </h2>

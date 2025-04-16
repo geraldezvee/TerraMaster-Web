@@ -16,8 +16,10 @@ export default function Login({ setIsAuthenticated }) {
   const navigate = useNavigate(); // ✅ Added for redirection
 
   useEffect(() => {
-    const savedCredentials = JSON.parse(localStorage.getItem("savedCredentials"));
-    
+    const savedCredentials = JSON.parse(
+      localStorage.getItem("savedCredentials")
+    );
+
     if (savedCredentials) {
       const { email, password, timestamp } = savedCredentials;
       const oneWeek = 7 * 24 * 60 * 60 * 1000;
@@ -44,7 +46,11 @@ export default function Login({ setIsAuthenticated }) {
     setIsLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       const usersRef = collection(db, "users");
@@ -60,7 +66,10 @@ export default function Login({ setIsAuthenticated }) {
 
           if (rememberMe) {
             const credentials = { email, password, timestamp: Date.now() };
-            localStorage.setItem("savedCredentials", JSON.stringify(credentials));
+            localStorage.setItem(
+              "savedCredentials",
+              JSON.stringify(credentials)
+            );
           } else {
             localStorage.removeItem("savedCredentials");
           }
@@ -77,7 +86,8 @@ export default function Login({ setIsAuthenticated }) {
       switch (errorCode) {
         case "auth/invalid-credential":
         case "auth/wrong-password":
-          errorMessage = "Invalid credentials. Please check your email and password.";
+          errorMessage =
+            "Invalid credentials. Please check your email and password.";
           break;
         case "auth/user-not-found":
           errorMessage = "No account found with this email.";
@@ -89,7 +99,8 @@ export default function Login({ setIsAuthenticated }) {
           errorMessage = "Network error. Check your internet connection.";
           break;
         default:
-          errorMessage = "Login failed. Please check your details and try again.";
+          errorMessage =
+            "Login failed. Please check your details and try again.";
       }
 
       setError(errorMessage);
@@ -99,7 +110,7 @@ export default function Login({ setIsAuthenticated }) {
   };
 
   return (
-    <div className="flex items-center justify-center w-full min-h-screen bg-[#F5EFE6]">
+    <div className="font-mono flex items-center justify-center w-full min-h-screen bg-[#F5EFE6]">
       <div className="bg-white p-6 md:p-12 rounded-lg shadow-lg w-full max-w-lg flex flex-col items-center">
         {/* Logo */}
         <div className="flex justify-center md:mb-1">
@@ -165,7 +176,10 @@ export default function Login({ setIsAuthenticated }) {
               onChange={() => setRememberMe(!rememberMe)}
               className="cursor-pointer w-4 h-4 text-yellow-900 border-gray-300 rounded focus:ring-yellow-900"
             />
-            <label htmlFor="rememberMe" className="text-gray-700 text-sm cursor-pointer">
+            <label
+              htmlFor="rememberMe"
+              className="text-gray-700 text-sm cursor-pointer"
+            >
               Remember Me
             </label>
           </div>

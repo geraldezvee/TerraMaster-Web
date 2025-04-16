@@ -45,10 +45,13 @@ export default function Dashboard() {
               }`,
               city: userData.City || "N/A",
               userType: userData.user_type || "N/A",
+              status: userData.status || "Inactive",
             };
           })
-          .filter((user) =>
-            ["Landowner", "Surveyor", "Processor"].includes(user.userType)
+          .filter(
+            (user) =>
+              user.status === "Active" &&
+              ["Landowner", "Surveyor", "Processor"].includes(user.userType)
           );
 
         setUsers(userList);
@@ -99,18 +102,20 @@ export default function Dashboard() {
   ];
 
   const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
     const filtered = users.filter(
       (user) =>
-        user.fullName.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        user.city.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        user.userType.toLowerCase().includes(e.target.value.toLowerCase())
+        user.fullName.toLowerCase().includes(query) ||
+        user.city.toLowerCase().includes(query) ||
+        user.userType.toLowerCase().includes(query)
     );
     setFilteredUsers(filtered);
   };
+  
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6">
+    <div className="font-mono bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-4xl font-bold text-gray-800">Dashboard</h2>
       <p className="text-md text-gray-600 mb-6">{currentDate}</p>
 
