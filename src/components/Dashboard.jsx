@@ -112,10 +112,9 @@ export default function Dashboard() {
     );
     setFilteredUsers(filtered);
   };
-  
 
   return (
-    <div className="font-mono bg-white shadow-lg rounded-lg p-6">
+    <div className="font-mono bg-yellow-200 min-h-screen shadow-lg p-6">
       <h2 className="text-4xl font-bold text-gray-800">Dashboard</h2>
       <p className="text-md text-gray-600 mb-6">{currentDate}</p>
 

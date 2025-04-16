@@ -47,7 +47,7 @@ export default function TransactionRecords() {
   };
 
   return (
-    <div className="font-mono min-h-screen bg-white shadow-lg rounded-lg p-6">
+    <div className="font-mono min-h-screen bg-yellow-200 shadow-lg p-6">
       <h2 className="text-4xl font-bold text-gray-900 mb-1">
         Transaction Records
       </h2>

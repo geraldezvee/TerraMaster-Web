@@ -97,7 +97,7 @@ export default function Sidebar({
 
       <div
         ref={sidebarRef}
-        className={`h-screen flex flex-col transition-all duration-300 fixed left-0 top-0 bg-[#F5EFE6] p-4 shadow-lg z-50 font-mono ${
+        className={`h-screen flex flex-col transition-all duration-300 fixed left-0 top-0 bg-yellow-500 p-4 shadow-lg z-50 font-mono ${
           isSidebarOpen ? "w-80" : "w-20"
         }`}
       >

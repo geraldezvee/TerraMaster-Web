@@ -36,7 +36,7 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="font-mono p-6">
+      <div className="font-mono bg-yellow-200 min-h-screen p-6">
         <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
         <div className="bg-white shadow-lg rounded-lg p-6 flex items-center">
           <Loader2 className="w-8 h-8 text-yellow-900 animate-spin mr-3" />
@@ -47,7 +47,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="font-mono p-6">
+    <div className="font-mono bg-yellow-200 min-h-screen p-6">
       {/* Page Header */}
       <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
 
