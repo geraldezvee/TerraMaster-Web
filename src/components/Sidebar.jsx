@@ -147,7 +147,7 @@ export default function Sidebar({
           <button
             onClick={handleLogoutClick}
             disabled={isLoggingOut}
-            className="flex items-center gap-3 p-3 rounded-md cursor-pointer text-gray-800 hover:bg-red-700 ease-in-out duration-300 hover:text-white w-full font-inter disabled:bg-gray-400"
+            className="flex items-center gap-3 p-3 rounded-md cursor-pointer text-gray-800 hover:bg-yellow-900 ease-in-out duration-300 hover:text-white w-full font-inter disabled:bg-gray-400"
           >
             <LogOut size={18} />
             {isSidebarOpen && <span className="font-medium">Logout</span>}

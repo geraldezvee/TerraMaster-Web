@@ -37,8 +37,8 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="font-mono bg-yellow-200 min-h-screen p-6">
-        <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
-        <div className="bg-white shadow-lg rounded-lg p-6 flex items-center">
+        <h2 className="text-4xl font-bold text-gray-900 mb-6">Profile</h2>
+        <div className="bg-white shadow-lg rounded-lg p-6 flex items-center h-[250px] sm:h-[200px] md:h-[250px]">
           <Loader2 className="w-8 h-8 text-yellow-900 animate-spin mr-3" />
           <p className="text-gray-600">Loading profile...</p>
         </div>
@@ -47,9 +47,9 @@ export default function Profile() {
   }
 
   return (
-    <div className="font-mono bg-yellow-200 min-h-screen p-6">
+    <div className="font-mono bg-yellow-200 min-h-screen p-6 h-[250px] sm:h-[200px] md:h-[250px]">
       {/* Page Header */}
-      <h2 className="text-4xl font-bold text-gray-900 mb-6">Admin Profile</h2>
+      <h2 className="text-4xl font-bold text-gray-900 mb-6">Profile</h2>
 
       {/* Profile Card */}
       <div className="bg-white shadow-lg rounded-lg p-6">
