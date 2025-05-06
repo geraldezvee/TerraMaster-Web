@@ -93,21 +93,21 @@ export default function TransactionRecords() {
         </span>
       </div>
       <div className="grid grid-cols-2 gap-2 text-sm">
-        <div className="text-gray-600">Hired:</div>
+        <div className="text-gray-600">Booked:</div>
         <div>{booking.hiredName}</div>
 
         <div className="text-gray-600">Date & Time:</div>
         <div>{formatDateTime(booking.startDateTime)}</div>
 
         <div className="text-gray-600">Contract Price:</div>
-        <div className="font-medium">${booking.contractPrice}.00</div>
+        <div className="font-medium">{booking.contractPrice}.00</div>
 
         <div className="text-gray-600">Down Payment:</div>
-        <div className="font-medium">${booking.downPayment}.00</div>
+        <div className="font-medium">{booking.downPayment}.00</div>
 
         <div className="text-gray-600">Commission:</div>
         <div className="font-medium text-green-600">
-          ${calculateCommission(booking.downPayment)}
+          {calculateCommission(booking.downPayment)}
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@ export default function TransactionRecords() {
             <tr>
               <th className="p-3 text-left">Property Owner</th>
               <th className="p-3 text-center">Start Date & Time</th>
-              <th className="p-3 text-left">Hired</th>
+              <th className="p-3 text-left">Booked</th>
               <th className="p-3 text-right">Contract Price</th>
               <th className="p-3 text-right">Down Payment</th>
               <th className="p-3 text-center">Stage</th>

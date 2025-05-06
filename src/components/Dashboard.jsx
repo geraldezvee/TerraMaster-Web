@@ -128,6 +128,106 @@ export default function Dashboard() {
         {currentDate}
       </p>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div className="bg-white p-4 rounded-lg shadow-md flex items-center">
+          <div className="rounded-full bg-green-100 p-3 mr-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-green-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Total Users</p>
+            <p className="text-xl font-bold text-gray-800">{totalUsers}</p>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-md flex items-center">
+          <div className="rounded-full bg-yellow-100 p-3 mr-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-yellow-900"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Landowners</p>
+            <p className="text-xl font-bold text-gray-800">
+              {userCounts.Landowner}
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-md flex items-center">
+          <div className="rounded-full bg-purple-100 p-3 mr-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-purple-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Surveyors</p>
+            <p className="text-xl font-bold text-gray-800">
+              {userCounts.Surveyor}
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-md flex items-center">
+          <div className="rounded-full bg-yellow-100 p-3 mr-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-yellow-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+              />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">Processors</p>
+            <p className="text-xl font-bold text-gray-800">
+              {userCounts.Processor}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-3 md:gap-6">
         {/* User List Section */}
         <div className="bg-white p-2 sm:p-4 rounded-lg shadow-md">
@@ -263,27 +363,6 @@ export default function Dashboard() {
                 </span>
               </div>
             ))}
-          </div>
-
-          {/* User Count Summary */}
-          <div className="mt-3 bg-gray-50 p-2 sm:p-3 rounded-lg shadow-sm">
-            <div className="text-center text-sm font-bold mb-1">
-              Total Users: {totalUsers}
-            </div>
-            <div className="grid grid-cols-3 gap-1 text-xs text-center">
-              <div className="bg-green-100 p-1 rounded">
-                <span className="block font-medium">Landowners</span>
-                <span className="font-bold">{userCounts.Landowner}</span>
-              </div>
-              <div className="bg-purple-100 p-1 rounded">
-                <span className="block font-medium">Surveyors</span>
-                <span className="font-bold">{userCounts.Surveyor}</span>
-              </div>
-              <div className="bg-red-100 p-1 rounded">
-                <span className="block font-medium">Processors</span>
-                <span className="font-bold">{userCounts.Processor}</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
