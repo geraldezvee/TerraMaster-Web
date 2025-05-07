@@ -56,7 +56,7 @@ export default function Dashboard() {
             }
             // For Surveyors and Processors, only show if status is Verified
             else if (["Surveyor", "Processor"].includes(user.userType)) {
-              return user.status === "Verified";
+              return user.status === "Verified" || user.status === "AnotherStatus";
             }
             return false;
           });
