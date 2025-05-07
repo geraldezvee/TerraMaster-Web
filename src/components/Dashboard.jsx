@@ -46,14 +46,20 @@ export default function Dashboard() {
               }`,
               city: userData.City || "N/A",
               userType: userData.user_type || "N/A",
-              status: userData.status || "Inactive",
+              status: userData.status || "email_not_verified",
             };
           })
-          .filter(
-            (user) =>
-              user.status === "Active" &&
-              ["Landowner", "Surveyor", "Processor"].includes(user.userType)
-          );
+          .filter((user) => {
+            // Show all Landowners regardless of status
+            if (user.userType === "Landowner") {
+              return true;
+            }
+            // For Surveyors and Processors, only show if status is Verified
+            else if (["Surveyor", "Processor"].includes(user.userType)) {
+              return user.status === "Verified";
+            }
+            return false;
+          });
 
         setUsers(userList);
         setFilteredUsers(userList);

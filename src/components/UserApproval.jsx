@@ -16,7 +16,7 @@ export default function UserApproval() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
-  const [notification, setNotification] = useState(null); // 🆕 Notification state
+  const [notification, setNotification] = useState(null); // Notification state
 
   useEffect(() => {
     fetchPendingUsers();
@@ -36,7 +36,11 @@ export default function UserApproval() {
     setLoading(true);
     try {
       const usersRef = collection(db, "users");
-      const q = query(usersRef, where("status", "==", "Pending"));
+      const q = query(
+        usersRef,
+        where("status", "==", "email_not_verified"),
+        where("user_type", "in", ["Processor", "Surveyor"])
+      );
       const querySnapshot = await getDocs(q);
 
       const usersList = [];
@@ -53,7 +57,7 @@ export default function UserApproval() {
   const approveUser = async (userId, userName) => {
     try {
       const userRef = doc(db, "users", userId);
-      await updateDoc(userRef, { status: "Active" });
+      await updateDoc(userRef, { status: "Verified" });
 
       setPendingUsers((prevUsers) =>
         prevUsers.filter((user) => user.id !== userId)
@@ -89,7 +93,7 @@ export default function UserApproval() {
   return (
     <div className="font-mono min-h-screen bg-yellow-200 shadow-lg p-6">
       <h2 className="text-4xl font-bold text-gray-900">
-        View Land Surveyor's / Processor's Details
+        Approve Land Surveyor's / Processor's
       </h2>
       <p className="text-md text-gray-600 mb-6">{currentDate}</p>
 
